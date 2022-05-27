@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package dev.dodo.geoservice;
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+
+service GeoService {
+  rpc GetGeoInfo (GeoInfoRequest) returns (GeoInfoResponse) {}
+  rpc GetAllGeo (google.protobuf.Empty) returns (stream GeoInfoResponse) {}
+}
+
+message GeoInfoRequest {
+  int32 geo_code = 1;
+}
+
+message GeoInfoResponse {
+  int32 geo_code = 1;
+  string name = 2;
+}
