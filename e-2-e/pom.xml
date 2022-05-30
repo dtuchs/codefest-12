@@ -55,6 +55,11 @@
 
         <dependency>
             <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-grpc</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
             <version>${allure.version}</version>
             <exclusions>

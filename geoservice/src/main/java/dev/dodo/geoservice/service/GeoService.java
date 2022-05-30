@@ -9,14 +9,12 @@ import net.devh.boot.grpc.server.service.GrpcService;
 
 import java.util.Map;
 
+import static java.util.UUID.randomUUID;
+
 @GrpcService
 public class GeoService extends GeoServiceGrpc.GeoServiceImplBase {
 
     private Map<Integer, GeoInfoResponse> availableGeo = Map.of(
-            7, GeoInfoResponse.newBuilder()
-                    .setGeoCode(7)
-                    .setName("RU")
-                    .build(),
             84, GeoInfoResponse.newBuilder()
                     .setGeoCode(84)
                     .setName("VN")
@@ -33,14 +31,15 @@ public class GeoService extends GeoServiceGrpc.GeoServiceImplBase {
 
     @Override
     public void getGeoInfo(GeoInfoRequest request, StreamObserver<GeoInfoResponse> responseObserver) {
-        responseObserver.onNext(availableGeo.get(request.getGeoCode()));
+        GeoInfoResponse response = availableGeo.get(request.getGeoCode());
+        responseObserver.onNext(response.toBuilder().setId(randomUUID().toString()).build());
         responseObserver.onCompleted();
     }
 
     @Override
     public void getAllGeo(Empty request, StreamObserver<GeoInfoResponse> responseObserver) {
         availableGeo.values().stream()
-                .peek(geoInfoResponse -> sleep())
+                .peek(r -> sleep())
                 .forEach(responseObserver::onNext);
         responseObserver.onCompleted();
     }

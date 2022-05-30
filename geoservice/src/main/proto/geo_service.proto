@@ -18,4 +18,5 @@ message GeoInfoRequest {
 message GeoInfoResponse {
   int32 geo_code = 1;
   string name = 2;
+  string id = 3;
 }
